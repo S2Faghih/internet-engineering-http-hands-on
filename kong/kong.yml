@@ -1,0 +1,28 @@
+
+_format_version: "3.0"
+
+services:
+  - name: legacy-service
+    url: http://legacy:8081
+    routes:
+      - name: legacy-route
+        paths:
+          - /
+        strip_path: false
+
+consumers:
+  - username: student
+    jwt_secrets:
+      - key: student-key
+        algorithm: HS256
+        secret: "http-hands-on-demo-secret-change-before-production"
+
+plugins:
+  - name: jwt
+    config:
+      header_names:
+        - authorization
+      key_claim_name: iss
+      claims_to_verify:
+        - exp
+

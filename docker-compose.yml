@@ -1,3 +1,4 @@
+
 services:
   legacy:
     image: ghcr.io/mccutchen/go-httpbin:latest
@@ -9,6 +10,29 @@ services:
     networks:
       - internal
 
+  kong:
+    image: kong:3.9
+    container_name: ie-kong
+    depends_on:
+      - legacy
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /etc/kong/kong.yml
+      KONG_ADMIN_LISTEN: "off"
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+    volumes:
+      - ./kong/kong.yml:/etc/kong/kong.yml:ro
+    ports:
+      - "80:8000"
+    networks:
+      - frontend
+      - internal
+
 networks:
+  frontend:
+    driver: bridge
+
   internal:
     internal: true
+
