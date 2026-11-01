@@ -1,0 +1,21 @@
+# Python generated files
+__pycache__/
+*.pyc
+*.pyo
+
+# Python environments
+.venv/
+venv/
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+
+# Temporary files
+*.log
